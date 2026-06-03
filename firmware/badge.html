@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Badge Sthack 2026</title>
+<style>
+:root {
+  --bg:       #0f0f13;
+  --surface:  #17171e;
+  --card:     #1e1e28;
+  --border:   #2e2e3e;
+  --accent:   #7c6fff;
+  --accent2:  #00d4ff;
+  --green:    #00e088;
+  --red:      #ff4466;
+  --orange:   #ff8c00;
+  --yellow:   #ffd060;
+  --text:     #e8e8f0;
+  --muted:    #6b6b80;
+  --radius:   10px;
+  --radius-sm:6px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg); color: var(--text);
+  font: 14px/1.6 system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+}
+
+/* ── Typography ── */
+h2 { font-size: 1rem; font-weight: 600; color: var(--text); }
+h3 { font-size: 0.8rem; font-weight: 600; text-transform: uppercase;
+     letter-spacing: .08em; color: var(--muted); margin-bottom: 12px; }
+label { font-size: 0.8rem; color: var(--muted); display: block; margin-bottom: 6px; }
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--card); color: var(--text);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 8px 14px; cursor: pointer; font: inherit; font-size: 0.85rem;
+  transition: background .12s, border-color .12s, opacity .12s;
+  white-space: nowrap;
+}
+.btn:hover:not(:disabled) { background: #26263a; border-color: var(--accent); }
+.btn:disabled { opacity: .35; cursor: default; }
+.btn.active { background: #2a2450; border-color: var(--accent); color: var(--accent); }
+.btn-primary {
+  background: var(--accent); color: #fff; border-color: var(--accent);
+  font-weight: 600;
+}
+.btn-primary:hover:not(:disabled) { background: #6a5ee0; border-color: #6a5ee0; }
+.btn-danger  { border-color: var(--red);    color: var(--red); }
+.btn-danger:hover:not(:disabled)  { background: #2a0015; }
+.btn-success { border-color: var(--green);  color: var(--green); }
+.btn-success:hover:not(:disabled) { background: #002a1a; }
+.btn-orange  { border-color: var(--orange); color: var(--orange); }
+.btn-orange:hover:not(:disabled)  { background: #1a0e00; }
+
+/* ── Inputs ── */
+input[type=text], input[type=number], textarea, select {
+  width: 100%; background: #13131a; color: var(--text);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 8px 12px; font: inherit; font-size: 0.85rem; outline: none;
+  transition: border-color .15s;
+}
+input[type=text]:focus, textarea:focus, select:focus { border-color: var(--accent); }
+textarea { resize: vertical; min-height: 60px; }
+input[type=range] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+
+/* ── Cards ── */
+.card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px;
+}
+.card + .card { margin-top: 12px; }
+.card-title {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 16px;
+}
+.card-icon { font-size: 1.1rem; }
+
+/* ── Tag grid (styles, animations) ── */
+.tag-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  background: #13131a; border: 1px solid var(--border);
+  border-radius: 20px; padding: 5px 12px; font-size: 0.78rem;
+  cursor: pointer; color: var(--muted); transition: all .12s;
+}
+.tag:hover:not(:disabled) { color: var(--text); border-color: var(--accent); }
+.tag.active { background: #2a2450; border-color: var(--accent); color: var(--accent); }
+.tag:disabled { opacity: .3; cursor: default; }
+
+/* ── Row utils ── */
+.row { display: flex; gap: 8px; align-items: flex-start; }
+.row > * { flex: 1; }
+.row > .btn { flex: 0 0 auto; }
+.gap-sm { gap: 6px; }
+.flex-wrap { flex-wrap: wrap; }
+.mt-8 { margin-top: 8px; }
+.mt-12 { margin-top: 12px; }
+
+/* ═══════════════════════════════════════
+   CONNECT SCREEN
+═══════════════════════════════════════ */
+#screen-connect {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 100vh; padding: 32px 16px; text-align: center;
+}
+.connect-logo {
+  font-size: 3.5rem; margin-bottom: 8px;
+  filter: drop-shadow(0 0 24px rgba(124,111,255,.5));
+}
+.connect-title {
+  font-size: 1.6rem; font-weight: 700; letter-spacing: .04em;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: 6px;
+}
+.connect-sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 40px; }
+.connect-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 32px 40px;
+  max-width: 400px; width: 100%;
+}
+#btn-connect-main {
+  width: 100%; padding: 14px; font-size: 1rem; border-radius: 10px;
+  margin-bottom: 16px;
+}
+.connect-notice {
+  font-size: 0.75rem; color: var(--muted); line-height: 1.7;
+}
+.connect-notice a { color: var(--accent); cursor: pointer; text-decoration: underline; }
+.compat-row {
+  display: flex; align-items: center; gap: 8px; margin-top: 12px;
+  font-size: 0.78rem; padding: 8px 12px;
+  border-radius: var(--radius-sm); border: 1px solid var(--border);
+}
+.compat-row.ok  { border-color: #1a4030; background: #0d1f18; color: var(--green); }
+.compat-row.bad { border-color: #3a1020; background: #1a080e; color: var(--red); }
+
+/* ═══════════════════════════════════════
+   MAIN APP
+═══════════════════════════════════════ */
+#screen-app { display: none; }
+.app-header {
+  position: sticky; top: 0; z-index: 10;
+  background: rgba(15,15,19,.92); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 24px; display: flex; align-items: center; gap: 16px;
+}
+.app-header-logo { font-size: 1.2rem; }
+.app-header-title { font-size: 0.9rem; font-weight: 600; flex: 1; }
+.badge-pill {
+  background: #1a1a2a; border: 1px solid var(--border);
+  border-radius: 20px; padding: 4px 12px; font-size: 0.75rem; color: var(--accent2);
+}
+.conn-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--green);
+  box-shadow: 0 0 8px var(--green); flex-shrink: 0;
+}
+#btn-disconnect {
+  font-size: 0.78rem; padding: 6px 12px; border-color: var(--red); color: var(--red);
+}
+
+.app-body { max-width: 960px; margin: 0 auto; padding: 24px 16px; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+.full { grid-column: 1 / -1; }
+
+/* ═══════════════════════════════════════
+   SKIN GRID
+═══════════════════════════════════════ */
+.skin-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 32px;
+}
+@media (max-width: 640px) { .skin-grid { grid-template-columns: 1fr; } }
+.skin-section { display: flex; flex-direction: column; gap: 10px; }
+.skin-label {
+  font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--muted);
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+
+/* ═══════════════════════════════════════
+   GAME GRID
+═══════════════════════════════════════ */
+.game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
+.game-btn {
+  background: #13131a; border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px 8px; cursor: pointer;
+  font: inherit; font-size: 0.8rem; color: var(--text);
+  text-align: center; transition: all .12s; display: flex;
+  flex-direction: column; align-items: center; gap: 6px;
+}
+.game-btn .game-icon { font-size: 1.4rem; }
+.game-btn:hover:not(:disabled) { border-color: var(--accent); background: #1e1e2e; }
+.game-btn:disabled { opacity: .3; cursor: default; }
+
+/* ═══════════════════════════════════════
+   OTA
+═══════════════════════════════════════ */
+#ota-drop {
+  border: 2px dashed var(--border); border-radius: var(--radius);
+  padding: 28px; text-align: center; cursor: pointer;
+  color: var(--muted); font-size: 0.85rem;
+  transition: all .2s; user-select: none; margin-bottom: 12px;
+}
+#ota-drop:hover   { border-color: var(--accent); background: #1a1a28; }
+#ota-drop.drag-over { border-color: var(--accent2); background: #001a22; }
+#ota-drop.has-file  { border-color: var(--green); color: var(--green); }
+.ota-progress-wrap { height: 6px; background: #1e1e2e; border-radius: 3px; overflow: hidden; display: none; margin-bottom: 8px; }
+.ota-progress-bar  { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); width: 0; transition: width .3s; }
+#ota-status { font-size: 0.78rem; color: var(--muted); min-height: 1.2em; }
+
+/* ═══════════════════════════════════════
+   ADVANCED SECTION
+═══════════════════════════════════════ */
+#advanced-toggle {
+  width: 100%; margin: 24px 0 0; padding: 12px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); cursor: pointer; font: inherit;
+  font-size: 0.85rem; color: var(--muted);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: color .12s, border-color .12s;
+}
+#advanced-toggle:hover { color: var(--text); border-color: var(--accent); }
+#advanced-section { display: none; margin-top: 12px; }
+#advanced-section.open { display: block; }
+.advanced-header {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 16px; padding: 10px 16px;
+  background: #1a0e2e; border: 1px solid #3a2a5a; border-radius: var(--radius);
+  font-size: 0.8rem; color: #aa88ff;
+}
+
+/* ── Log ── */
+#log-box {
+  height: 160px; overflow-y: auto; font-size: 0.72rem;
+  background: #0a0a10; border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 10px; font-family: 'Courier New', monospace;
+}
+.log-send { color: var(--accent); }
+.log-recv { color: var(--green); }
+.log-err  { color: var(--red); }
+.log-info { color: var(--yellow); }
+
+/* ── NVS Reset warning ── */
+.nvs-warning {
+  background: #200010; border: 1px solid #601030;
+  border-radius: var(--radius); padding: 14px 16px; margin-bottom: 12px;
+  font-size: 0.8rem; line-height: 1.8; color: #ff8888;
+}
+.nvs-warning strong { color: var(--red); font-size: 0.9rem; }
+
+/* ── Calibration ── */
+.cal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 20px; margin-bottom: 12px; }
+.cal-row label { display: flex; justify-content: space-between; }
+.cal-val { color: var(--accent); font-weight: 600; }
+
+/* ── Tamagotchi status chip ── */
+.tama-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.chip {
+  background: #13131a; border: 1px solid var(--border);
+  border-radius: 6px; padding: 6px 12px; font-size: 0.78rem;
+}
+.chip-label { color: var(--muted); margin-right: 6px; }
+.chip-val   { color: var(--accent); font-weight: 600; }
+
+/* ═══════════════════════════════════════
+   MODALS
+═══════════════════════════════════════ */
+.modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.75); z-index: 100;
+  align-items: center; justify-content: center; padding: 16px;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 28px; max-width: 420px; width: 100%;
+  position: relative;
+}
+.modal-close {
+  position: absolute; top: 16px; right: 16px;
+  background: none; border: none; color: var(--muted);
+  font-size: 1.2rem; cursor: pointer; padding: 4px 8px;
+}
+.modal-close:hover { color: var(--text); }
+.modal h2 { margin-bottom: 16px; }
+.modal-step {
+  display: flex; gap: 10px; align-items: flex-start;
+  margin-bottom: 12px; font-size: 0.85rem; line-height: 1.6;
+}
+.modal-step-num {
+  background: var(--accent); color: #fff; border-radius: 50%;
+  width: 22px; height: 22px; display: flex; align-items: center;
+  justify-content: center; font-size: 0.72rem; font-weight: 700; flex-shrink: 0; margin-top: 2px;
+}
+.kbd {
+  display: inline-block; background: #2a2a3a; border: 1px solid var(--border);
+  border-radius: 4px; padding: 1px 7px; font-size: 0.75rem; font-family: monospace;
+}
+
+/* PIN modal */
+#pin-code {
+  font-size: 3.2rem; letter-spacing: 12px; color: var(--yellow);
+  font-weight: 700; text-align: center; margin: 16px 0;
+}
+#pin-timer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-bottom: 8px; }
+#pin-timer.urgent { color: var(--red); }
+#pin-waiting { text-align: center; color: var(--muted); font-size: 0.8rem; animation: pulse 1.4s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.4; } }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     CONNECT SCREEN
+════════════════════════════════════════════════ -->
+<div id="screen-connect">
+  <div class="connect-title">Badge Sthack 2026</div>
+  <div class="connect-sub">Bluetooth control interface</div>
+
+  <div class="connect-card">
+    <button id="btn-connect-main" class="btn btn-primary" onclick="connect()">
+      Connect to badge
+    </button>
+    <div class="connect-notice">
+      Requires Chrome or Edge with Web Bluetooth support.<br>
+      <a onclick="showModal('howto-modal')">How to enable Bluetooth on the badge?</a>
+    </div>
+    <div id="compat-notice" class="compat-row"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     MAIN APP
+════════════════════════════════════════════════ -->
+<div id="screen-app">
+  <header class="app-header">
+    <span class="app-header-title">Badge Sthack 2026</span>
+    <span class="badge-pill" id="badge-info-pill"></span>
+    <div class="conn-dot"></div>
+    <button id="btn-disconnect" class="btn btn-danger" onclick="disconnect()">Disconnect</button>
+  </header>
+
+  <div class="app-body">
+    <div class="two-col">
+
+      <!-- ── Appearance ── -->
+      <div class="card full">
+        <div class="card-title"><span class="card-icon">🎨</span><h2>Appearance</h2></div>
+        <div class="skin-grid">
+
+          <div class="skin-section">
+            <div class="skin-label">👁 Eyes</div>
+            <div class="tag-grid" id="style-grid"></div>
+          </div>
+
+          <div class="skin-section">
+            <div class="skin-label">💋 Mouth</div>
+            <div class="tag-grid" id="led-mouth-grid"></div>
+            <button class="btn btn-success" id="btn-mouth-save" disabled onclick="sendCmd('LEDSAVE')" style="align-self:flex-start;font-size:.75rem;padding:5px 10px">Save</button>
+          </div>
+
+          <div class="skin-section">
+            <div class="skin-label">💫 Rings</div>
+            <div class="tag-grid" id="led-tour-grid"></div>
+            <button class="btn btn-success" id="btn-tour-save" disabled onclick="sendCmd('LEDSAVE')" style="align-self:flex-start;font-size:.75rem;padding:5px 10px">Save</button>
+          </div>
+
+          <div class="skin-section">
+            <div class="skin-label">✨ Blink</div>
+            <div class="row gap-sm">
+              <button id="blink-on"  class="btn" disabled onclick="sendCmd('EYE:7')">On</button>
+              <button id="blink-off" class="btn" disabled onclick="sendCmd('EYE:6')">Off</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── Scrolling text ── -->
+      <div class="card">
+        <div class="card-title"><span class="card-icon">📺</span><h2>Scrolling text</h2></div>
+        <label>Text displayed on both screens</label>
+        <div class="row mt-8">
+          <input type="text" id="text-in" placeholder="STHACK 2026..." maxlength="120">
+          <button class="btn btn-primary" disabled id="btn-send-text" onclick="sendText()">Send</button>
+        </div>
+      </div>
+
+      <!-- ── Sound ── -->
+      <div class="card">
+        <div class="card-title"><span class="card-icon">🔊</span><h2>Sound</h2></div>
+        <h3>Badge sounds</h3>
+        <div class="row gap-sm flex-wrap">
+          <button class="btn btn-orange" id="btn-own-cry"   disabled onclick="sendCmd('CRY')">Cry</button>
+          <button class="btn" style="border-color:#aa88ff;color:#aa88ff" id="btn-own-music" disabled onclick="sendCmd('CRY:music')">My melody</button>
+        </div>
+      </div>
+
+      <!-- ── Games ── -->
+      <div class="card full">
+        <div class="card-title"><span class="card-icon">🎮</span><h2>Games</h2></div>
+        <div class="game-grid" id="game-grid"></div>
+      </div>
+
+      <!-- ── OTA ── -->
+      <div class="card full">
+        <div class="card-title"><span class="card-icon">⚡</span><h2>Firmware update</h2></div>
+        <div id="ota-drop" onclick="document.getElementById('ota-file').click()"
+             ondragover="event.preventDefault();this.classList.add('drag-over')"
+             ondragleave="this.classList.remove('drag-over')"
+             ondrop="otaDrop(event)">
+          Drop <code>firmware.bin</code> here, or click to select
+        </div>
+        <input type="file" id="ota-file" accept=".bin" style="display:none" onchange="otaFileInput(this.files[0])">
+        <div class="ota-progress-wrap" id="ota-progress-wrap"><div class="ota-progress-bar" id="ota-progress-bar"></div></div>
+        <div id="ota-status"></div>
+        <div class="row mt-12 gap-sm">
+          <button class="btn btn-orange" id="btn-ota-start" disabled onclick="startOta()">Flash firmware</button>
+          <button class="btn btn-danger" id="btn-ota-abort" disabled onclick="abortOta()">Abort</button>
+        </div>
+        <p class="connect-notice" style="margin-top:12px">
+          Transfer runs over Bluetooth (~60 s). Badge reboots automatically. No WiFi needed.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- ── Advanced toggle ── -->
+    <button id="advanced-toggle" onclick="toggleAdvanced()">
+      <span id="advanced-toggle-icon">▼</span> Advanced controls
+    </button>
+
+    <div id="advanced-section">
+      <div class="two-col">
+
+        <!-- RTTTL player -->
+        <div class="card">
+          <div class="card-title"><span class="card-icon">🎵</span><h2>RTTTL player</h2></div>
+          <label>RTTTL string</label>
+          <textarea id="rtttl-in" placeholder="Name:d=4,o=5,b=120:e5,g5,a5..."></textarea>
+          <div class="row mt-8 gap-sm">
+            <button class="btn" disabled id="btn-rtttl-play" onclick="sendMusic()">▶ Play</button>
+            <button class="btn btn-danger" disabled id="btn-rtttl-stop" onclick="sendCmd('MUSIC:')">■ Stop</button>
+          </div>
+          <div class="tag-grid mt-12" id="rtttl-presets"></div>
+        </div>
+
+        <!-- Cry from ID -->
+        <div class="card">
+          <div class="card-title"><span class="card-icon">📡</span><h2>Cry from badge ID</h2></div>
+          <label>Last 3 MAC bytes (hex, e.g. A3F201)</label>
+          <div class="row mt-8">
+            <input type="text" id="mac-in" placeholder="A3F201" maxlength="6"
+                   oninput="onMacInput()" style="text-transform:uppercase;letter-spacing:2px">
+            <button class="btn" onclick="onMacInput()">Analyze</button>
+          </div>
+          <div id="mac-result" style="display:none;margin-top:12px;font-size:.8rem;line-height:2">
+            <div><span id="mac-name" style="color:var(--accent);font-size:1rem;letter-spacing:2px"></span>
+                 <span id="mac-hex" style="color:var(--muted);margin-left:10px"></span></div>
+            <div id="mac-params" style="color:var(--orange);font-size:.75rem"></div>
+            <div id="mac-music"  style="color:var(--muted);font-size:.7rem;word-break:break-all;margin-top:2px"></div>
+          </div>
+          <div class="row mt-12 gap-sm" style="flex-wrap:wrap">
+            <button class="btn btn-orange" id="btn-mac-cry"   disabled onclick="macSendCry()">Send cry</button>
+            <button class="btn" style="border-color:#aa88ff;color:#aa88ff" id="btn-mac-music" disabled onclick="macSendMusic()">Send melody</button>
+          </div>
+        </div>
+
+        <!-- FSM / Tamagotchi -->
+        <div class="card full">
+          <div class="card-title"><span class="card-icon">🐣</span><h2>Tamagotchi & mode</h2></div>
+          <div class="two-col">
+            <div>
+              <h3>FSM state</h3>
+              <div class="tama-chips" id="fsm-chips">
+                <div class="chip"><span class="chip-label">Mode</span><span class="chip-val" id="chip-mode">—</span></div>
+                <div class="chip"><span class="chip-label">Stage</span><span class="chip-val" id="chip-stage">—</span></div>
+                <div class="chip"><span class="chip-label">BG scan</span><span class="chip-val" id="chip-bg">—</span></div>
+              </div>
+              <div class="row gap-sm flex-wrap">
+                <button class="btn" id="btn-fsm-get" disabled onclick="fsmGet()">Refresh</button>
+              </div>
+            </div>
+            <div>
+              <h3>Tamagotchi</h3>
+              <div class="tama-chips">
+                <div class="chip"><span class="chip-label">Level</span><span class="chip-val" id="chip-level">—</span></div>
+                <div class="chip"><span class="chip-label">Wakes</span><span class="chip-val" id="chip-wakes">—</span></div>
+                <div class="chip"><span class="chip-label">Need</span><span class="chip-val" id="chip-need">—</span></div>
+                <div class="chip"><span class="chip-label">Flag</span><span class="chip-val" id="chip-flag">—</span></div>
+              </div>
+              <div class="row gap-sm flex-wrap">
+                <button class="btn" id="btn-tama-get" disabled onclick="tamaGet()">Refresh</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Eye calibration -->
+        <div class="card full">
+          <div class="card-title"><span class="card-icon">👁</span><h2>Eye calibration</h2></div>
+          <div class="cal-grid" id="cal-grid"></div>
+          <div class="row gap-sm flex-wrap">
+            <button class="btn" id="btn-cal-read"  disabled onclick="calRead()">Read from badge</button>
+            <button class="btn" id="btn-cal-apply" disabled onclick="calApply()">Apply</button>
+            <button class="btn btn-success" id="btn-cal-save" disabled onclick="calSave()">Save to NVS</button>
+            <button class="btn" onclick="calReset()" style="color:var(--muted)">Reset defaults</button>
+          </div>
+        </div>
+
+        <!-- Raw command -->
+        <div class="card">
+          <div class="card-title"><span class="card-icon">⌨️</span><h2>Raw command</h2></div>
+          <label>Write directly to the Command characteristic</label>
+          <div class="row mt-8">
+            <input type="text" id="raw-in" placeholder="EYE:2  |  STYLE:5  |  TEXT:hello">
+            <button class="btn" id="btn-raw" disabled onclick="sendRaw()">Send</button>
+          </div>
+        </div>
+
+        <!-- Log -->
+        <div class="card">
+          <div class="card-title">
+            <span class="card-icon">📋</span><h2>Log</h2>
+            <button class="btn" style="margin-left:auto;font-size:.72rem;padding:4px 10px" onclick="clearLog()">Clear</button>
+          </div>
+          <div id="log-box"></div>
+        </div>
+
+        <!-- NVS Reset -->
+        <div class="card full">
+          <div class="card-title"><span class="card-icon">⚠️</span><h2>Factory reset</h2></div>
+          <div class="nvs-warning">
+            <strong>Warning — this action is irreversible.</strong><br>
+            Erasing NVS will reset all settings, tamagotchi progress, LED preferences,
+            eye calibration, and the operating mode to the factory defaults.<br><br>
+            After the reset, the badge will reboot into <strong>SleepMode</strong>.
+            The Bluetooth server will be disabled, and the badge will be unreachable.
+          </div>
+          <button class="btn btn-danger" id="btn-nvs-reset" disabled onclick="nvsReset()">
+            Erase all NVS data and reboot
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     MODALS
+════════════════════════════════════════════════ -->
+
+<!-- How-to modal -->
+<div class="modal-overlay" id="howto-modal" onclick="closeModalOutside(event,'howto-modal')">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('howto-modal')">✕</button>
+    <h2 style="margin-bottom:20px">How to enable Bluetooth</h2>
+    <div class="modal-step">
+      <div class="modal-step-num">1</div>
+      <div>Make sure the badge is in <strong>awake mode</strong> (eyes open).</div>
+    </div>
+    <div class="modal-step">
+      <div class="modal-step-num">2</div>
+      <div>Hold <span class="kbd">CENTER</span> for 0.5 s to open the menu.</div>
+    </div>
+    <div class="modal-step">
+      <div class="modal-step-num">3</div>
+      <div>Navigate to <strong>Settings</strong> with <span class="kbd">LEFT</span> / <span class="kbd">RIGHT</span>, confirm with <span class="kbd">CENTER</span>.</div>
+    </div>
+    <div class="modal-step">
+      <div class="modal-step-num">4</div>
+      <div>Go to <strong>Bluetooth → Server</strong> and press <span class="kbd">CENTER</span> to toggle it <strong>ON</strong>.</div>
+    </div>
+    <div class="modal-step">
+      <div class="modal-step-num">5</div>
+      <div>Come back here and click <strong>Connect to badge</strong>. A 4-digit PIN will appear on the badge screens,confirm it by pressing <span class="kbd">CENTER</span> on the badge.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PIN modal -->
+<div class="modal-overlay" id="pin-modal">
+  <div class="modal" style="text-align:center;max-width:360px">
+    <h2>🔒 Confirm on the badge</h2>
+    <div id="pin-code">----</div>
+    <p style="font-size:.85rem;color:var(--muted);line-height:1.7;margin-bottom:8px">
+      This code is shown on the badge screens.<br>
+      Press <strong style="color:var(--text)">CENTER</strong> on the badge to authorize,<br>
+      or <strong style="color:var(--text)">LEFT/RIGHT</strong> to reject.
+    </p>
+    <div id="pin-timer"></div>
+    <div id="pin-waiting">Waiting for confirmation…</div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// BLE UUIDs
+// ═══════════════════════════════════════════════════════════════
+const SVC      = '19b10020-e8f2-537e-4f6c-d104768a1214';
+const INFO     = '19b10021-e8f2-537e-4f6c-d104768a1214';
+const CMD      = '19b10023-e8f2-537e-4f6c-d104768a1214';
+const PIN_UUID = '19b10025-e8f2-537e-4f6c-d104768a1214';
+const OTA_DATA = '19b10027-e8f2-537e-4f6c-d104768a1214';
+
+// ═══════════════════════════════════════════════════════════════
+// Static data
+// ═══════════════════════════════════════════════════════════════
+const EYE_MODES = [[0,'FollowState'],[1,'Closed'],[2,'Awake'],[3,'Sleepy'],[4,'Hearts'],[5,'Scroll'],[6,'Blinking'],[7,'Calm']];
+const LED_MODES = [[0,'Off'],[1,'RingPulse'],[2,'MouthPink'],[3,'TamaCry'],[4,'TamaSuccess'],[5,'WakeAccent']];
+const FSM_MODES  = ['SleepMode','FullMode'];
+const FSM_STAGES = ['Sleeping','Peeking','Closing','WakingUp','Awake','Dozing'];
+
+const FALLBACK_STYLES = ['Standard','Hearts','Stars','Matrix','Hypnosis','Bolt','Reptile','Infinity','Anime','Scope','Clock','Robot','Lock','Wifi','Cat','Human'];
+const FALLBACK_TOUR   = ['Off','BluePulse','CyanPulse','Rainbow','Fire','Police','Comet','Breathing','Disco','Strobe','GreenPulse','Aurora','Sunset','Thunder','Heartbeat'];
+const FALLBACK_MOUTH  = ['Off','Pink','Rainbow','Lava','Chill','Candle','Cyber','VU','Bounce','Sparkle','Ocean','Toxic','Aurora','Heartbeat','Matrix'];
+const FALLBACK_GAMES  = ['Simon','Stop','Snake','Mastermind','Tetris','Flappy','Breakout','Pac-Man','Doodle Jump','Maze','Dino','Space Inv.'];
+const GAME_ICONS      = ['🧠','🎯','🐍','🔐','🟦','🐦','🧱','👾','🦘','🗺️','🦕','🛸'];
+
+
+
+const RTTTL_PRESETS = [
+  { name:'Mario',    str:'Mario:d=4,o=5,b=200:16e6,16e6,32p,8e6,16c6,8e6,8g6,8p,8g,8p' },
+  { name:'Tetris',   str:'Tetris:d=4,o=5,b=200:e6,8b,8c6,8d6,16e6,16d6,8c6,8b,a,8a,8c6,e6,8d6,8c6,b' },
+  { name:'Nokia',    str:'Nokia:d=4,o=5,b=225:8e6,8d6,f#,g#,8c#6,8b,d,e,8b,8a,c#,e,a' },
+];
+
+const CAL_FIELDS = [
+  { key:'tlX', label:'Left corner X',  min:0,   max:60,  def:14  },
+  { key:'tlY', label:'Left corner Y',  min:0,   max:50,  def:0   },
+  { key:'brX', label:'Right corner X', min:64,  max:127, def:121 },
+  { key:'brY', label:'Right corner Y', min:0,   max:63,  def:52  },
+  { key:'bmX', label:'Bottom center X',min:0,   max:127, def:46  },
+  { key:'bmY', label:'Bottom center Y',min:20,  max:63,  def:57  },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// State
+// ═══════════════════════════════════════════════════════════════
+let device=null, cmdChar=null, infoChar=null, otaDataChar=null;
+let _pinTimer=null, _otaFile=null, _otaRunning=false, _tamaLevel=1;
+let _macSeed=null, _macMusicStr=null;
+let _calDebounce=null;
+let _activeTour=null, _activeMouth=null, _activeStyle=null;
+
+// ═══════════════════════════════════════════════════════════════
+// Init
+// ═══════════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  checkCompat();
+  buildStaticUI();
+  document.getElementById('text-in').addEventListener('keydown', e => { if(e.key==='Enter') sendText(); });
+  document.getElementById('raw-in').addEventListener('keydown',  e => { if(e.key==='Enter') sendRaw(); });
+});
+
+function checkCompat() {
+  const el = document.getElementById('compat-notice');
+  if (!window.isSecureContext) {
+    el.className = 'compat-row bad';
+    el.innerHTML = '⚠ file:// URL detected — Web Bluetooth is blocked. Serve via <code>python3 -m http.server 8080</code>';
+  } else if (!navigator.bluetooth) {
+    el.className = 'compat-row bad';
+    el.innerHTML = '⚠ Web Bluetooth not available. Use Chrome or Edge.';
+  } else {
+    el.className = 'compat-row ok';
+    el.innerHTML = '✓ Web Bluetooth available';
+  }
+}
+
+function buildStaticUI() {
+  // RTTTL presets
+  const rpDiv = document.getElementById('rtttl-presets');
+  RTTTL_PRESETS.forEach(p => {
+    const b = document.createElement('button');
+    b.className = 'tag'; b.textContent = p.name; b.disabled = true;
+    b.onclick = () => { document.getElementById('rtttl-in').value = p.str; sendCmd(`MUSIC:${p.str}`); };
+    rpDiv.appendChild(b);
+  });
+
+
+  // Calibration sliders
+  const calDiv = document.getElementById('cal-grid');
+  CAL_FIELDS.forEach(f => {
+    const wrap = document.createElement('div');
+    wrap.className = 'cal-row';
+    wrap.innerHTML = `
+      <label>${f.label} <span class="cal-val" id="cal-lbl-${f.key}">${f.def}</span></label>
+      <input type="range" id="cal-${f.key}" min="${f.min}" max="${f.max}" value="${f.def}"
+             disabled oninput="onCalSlider('${f.key}',this.value)">`;
+    calDiv.appendChild(wrap);
+  });
+
+  // Placeholder loading states for dynamic grids
+  loadingText('style-grid');
+  loadingText('led-mouth-grid');
+  loadingText('led-tour-grid');
+  loadingText('game-grid');
+}
+
+function loadingText(id) {
+  const el = document.getElementById(id);
+  if (el) el.innerHTML = '<span style="color:var(--muted);font-size:.75rem">Loading…</span>';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Advanced toggle
+// ═══════════════════════════════════════════════════════════════
+function toggleAdvanced() {
+  const sec = document.getElementById('advanced-section');
+  const icon = document.getElementById('advanced-toggle-icon');
+  const open = sec.classList.toggle('open');
+  icon.textContent = open ? '▲' : '▼';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Modals
+// ═══════════════════════════════════════════════════════════════
+function showModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function closeModalOutside(e, id) { if (e.target === document.getElementById(id)) closeModal(id); }
+
+// ═══════════════════════════════════════════════════════════════
+// BLE Connection
+// ═══════════════════════════════════════════════════════════════
+async function connect() {
+  if (!navigator.bluetooth) { alert('Web Bluetooth is not supported in this browser.'); return; }
+  if (!window.isSecureContext) { alert('Please serve this page over HTTPS or localhost.'); return; }
+  try {
+    log('Searching for badge…', 'info');
+    device = await navigator.bluetooth.requestDevice({ filters: [{ services: [SVC] }] });
+    device.addEventListener('gattserverdisconnected', onDisconnect);
+
+    const server  = await device.gatt.connect();
+    const service = await server.getPrimaryService(SVC);
+
+    try {
+      infoChar = await service.getCharacteristic(INFO);
+    } catch(e) { infoChar = null; }
+
+    cmdChar = await service.getCharacteristic(CMD);
+
+    try {
+      otaDataChar = await service.getCharacteristic(OTA_DATA);
+    } catch(e) { otaDataChar = null; }
+
+    // PIN auth
+    try {
+      const pinChar = await service.getCharacteristic(PIN_UUID);
+      const pinVal  = await pinChar.readValue();
+      const pin     = new TextDecoder().decode(pinVal);
+      showPinModal(pin);
+      log(`PIN: ${pin} — confirm on the badge`, 'info');
+
+      await pinChar.startNotifications();
+      pinChar.addEventListener('characteristicvaluechanged', async e => {
+        const r = new TextDecoder().decode(e.target.value);
+        closePinModal();
+        if (r === 'OK') {
+          log('Authentication accepted', 'recv');
+          // Read identity BEFORE any command overwrites the info char
+          await readBadgeIdentity();
+          onConnected();
+          fetchDynamic();
+        } else {
+          log('Authentication rejected or timed out', 'err');
+          device.gatt.disconnect();
+        }
+      });
+    } catch(e) {
+      // No PIN char — connect directly
+      await readBadgeIdentity();
+      onConnected();
+      fetchDynamic();
+    }
+  } catch(e) {
+    if (e.name !== 'NotFoundError') log(`Error: ${e.message}`, 'err');
+    else log('Connection cancelled', 'info');
+  }
+}
+
+function disconnect() { device?.gatt?.disconnect(); }
+
+async function readBadgeIdentity() {
+  if (!infoChar) {
+    document.getElementById('badge-info-pill').textContent = device.name || '';
+    return;
+  }
+  // Small delay: let the GATT server settle after PIN auth before reading
+  await delay(200);
+  try {
+    const txt = dec(await infoChar.readValue());
+    // The info char may contain stale command responses from a previous session.
+    // Only trust it if it matches the identity format (fw= id= name=).
+    const mId   = txt.match(/id=([A-Fa-f0-9]{6})/i);
+    const mVer  = txt.match(/fw=([^\s]+)/i);
+    const name  = device.name || '';
+    const id    = mId?.[1]?.toUpperCase() || '';
+    const ver   = mVer?.[1] ? `v${mVer[1]}` : '';
+    document.getElementById('badge-info-pill').textContent =
+      [name, id, ver].filter(Boolean).join('  ·  ');
+  } catch(e) {
+    log(`readBadgeIdentity error: ${e.message}`, 'err');
+    document.getElementById('badge-info-pill').textContent = device.name || '';
+  }
+}
+
+function onConnected() {
+  document.getElementById('screen-connect').style.display = 'none';
+  document.getElementById('screen-app').style.display = 'block';
+  setAllEnabled(true);
+  log('Connected — ready', 'recv');
+}
+
+function onDisconnect() {
+  document.getElementById('screen-connect').style.display = '';
+  document.getElementById('screen-app').style.display = 'none';
+  setAllEnabled(false);
+  cmdChar = null; infoChar = null; otaDataChar = null;
+  _otaRunning = false;
+  closePinModal();
+  resetChips();
+  loadingText('style-grid'); loadingText('led-mouth-grid');
+  loadingText('led-tour-grid'); loadingText('game-grid');
+  log('Disconnected', 'err');
+}
+
+function setAllEnabled(on) {
+  document.querySelectorAll('.btn, .tag, input[type=range]').forEach(el => {
+    if (el.id === 'btn-ota-start')    return; // controlled separately
+    if (el.id === 'btn-connect-main') return; // always enabled
+    if (el.id === 'btn-led-save')     return; // removed, kept as safety
+    el.disabled = !on;
+  });
+  document.getElementById('btn-ota-start').disabled = !on || !_otaFile || !otaDataChar;
+  document.getElementById('btn-ota-abort').disabled = true;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PIN modal
+// ═══════════════════════════════════════════════════════════════
+function showPinModal(pin) {
+  document.getElementById('pin-code').textContent = pin;
+  showModal('pin-modal');
+  const timerEl = document.getElementById('pin-timer');
+  let rem = 20;
+  timerEl.textContent = `Expires in ${rem}s`;
+  timerEl.className = '';
+  if (_pinTimer) clearInterval(_pinTimer);
+  _pinTimer = setInterval(() => {
+    rem--;
+    if (rem <= 5) timerEl.className = 'urgent';
+    if (rem <= 0) { clearInterval(_pinTimer); closePinModal(); }
+    else timerEl.textContent = `Expires in ${rem}s`;
+  }, 1000);
+}
+function closePinModal() {
+  closeModal('pin-modal');
+  if (_pinTimer) { clearInterval(_pinTimer); _pinTimer = null; }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Dynamic lists (fetched from badge)
+// ═══════════════════════════════════════════════════════════════
+async function queryList(cmd, prefix, fallback) {
+  if (!cmdChar || !infoChar) return fallback;
+  try {
+    await cmdChar.writeValue(enc(cmd));
+    await delay(150);
+    const txt = dec(await infoChar.readValue());
+    if (!txt.startsWith(prefix+':')) return fallback;
+    const items = txt.slice(prefix.length+1).split(',').filter(Boolean);
+    return items.length ? items : fallback;
+  } catch(e) { return fallback; }
+}
+
+async function fetchDynamic() {
+  log('Fetching lists from badge…', 'info');
+  const [styles, tour, mouth, games] = await Promise.all([
+    queryList('LIST:styles','styles', FALLBACK_STYLES),
+    queryList('LIST:tour',  'tour',   FALLBACK_TOUR),
+    queryList('LIST:mouth', 'mouth',  FALLBACK_MOUTH),
+    queryList('LIST:games', 'games',  FALLBACK_GAMES),
+  ]);
+  buildStyleGrid(styles);
+  buildTourGrid(tour);
+  buildMouthGrid(mouth);
+  buildGameGrid(games);
+  log(`Loaded ${styles.length} styles, ${tour.length} rings, ${mouth.length} mouth, ${games.length} games`, 'recv');
+  await tamaGet();
+  await fsmGet();
+}
+
+function buildStyleGrid(names) {
+  _activeStyle = null;
+  const div = document.getElementById('style-grid');
+  div.innerHTML = '';
+  names.forEach((name, i) => {
+    const b = document.createElement('button');
+    b.className = 'tag'; b.textContent = name; b.id = `style-${i}`;
+    b.onclick = () => {
+      sendCmd(`STYLE:${i}`);
+      if (_activeStyle !== null) document.getElementById(`style-${_activeStyle}`)?.classList.remove('active');
+      _activeStyle = i; b.classList.add('active');
+    };
+    div.appendChild(b);
+  });
+}
+
+function buildTourGrid(names) {
+  _activeTour = null;
+  const div = document.getElementById('led-tour-grid');
+  div.innerHTML = '';
+  names.forEach((name, i) => {
+    const b = document.createElement('button');
+    b.className = 'tag'; b.textContent = name; b.id = `tour-${i}`;
+    b.onclick = () => {
+      sendCmd(`LEDT:${i}`);
+      if (_activeTour !== null) document.getElementById(`tour-${_activeTour}`)?.classList.remove('active');
+      _activeTour = i; b.classList.add('active');
+    };
+    div.appendChild(b);
+  });
+}
+
+function buildMouthGrid(names) {
+  _activeMouth = null;
+  const div = document.getElementById('led-mouth-grid');
+  div.innerHTML = '';
+  names.forEach((name, i) => {
+    const b = document.createElement('button');
+    b.className = 'tag'; b.textContent = name; b.id = `mouth-${i}`;
+    b.onclick = () => {
+      sendCmd(`LEDM:${i}`);
+      if (_activeMouth !== null) document.getElementById(`mouth-${_activeMouth}`)?.classList.remove('active');
+      _activeMouth = i; b.classList.add('active');
+    };
+    div.appendChild(b);
+  });
+}
+
+function buildGameGrid(names) {
+  const div = document.getElementById('game-grid');
+  div.innerHTML = '';
+  names.forEach((name, i) => {
+    const b = document.createElement('button');
+    b.className = 'game-btn';
+    b.innerHTML = `<span class="game-icon">${GAME_ICONS[i]||'🎮'}</span>${name}`;
+    b.onclick = () => sendCmd(`GAME:${i}`);
+    div.appendChild(b);
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Send helpers
+// ═══════════════════════════════════════════════════════════════
+async function sendCmd(cmd, onSuccess) {
+  if (!cmdChar) { log('Not connected', 'err'); return; }
+  try {
+    await cmdChar.writeValue(enc(cmd));
+    log(`→ ${cmd}`, 'send');
+    if (onSuccess) onSuccess();
+  } catch(e) {
+    log(`Error: ${e.message}`, 'err');
+    if (e.name === 'NetworkError') onDisconnect();
+  }
+}
+
+function sendText() {
+  const t = document.getElementById('text-in').value.trim();
+  if (t) sendCmd(`TEXT:${t}`);
+}
+function sendMusic() {
+  const r = document.getElementById('rtttl-in').value.trim();
+  if (r) sendCmd(`MUSIC:${r}`);
+}
+function sendRaw() {
+  const r = document.getElementById('raw-in').value.trim();
+  if (!r) return;
+  sendCmd(r);
+  document.getElementById('raw-in').value = '';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Tamagotchi & FSM
+// ═══════════════════════════════════════════════════════════════
+async function tamaGet() {
+  if (!cmdChar || !infoChar) return;
+  try {
+    await cmdChar.writeValue(enc('TAMA_GET'));
+    await delay(150);
+    const txt = dec(await infoChar.readValue());
+    log(`← ${txt}`, 'recv');
+    const m = txt.match(/tama:lvl=(\d+),wakes=(\d+),needAt=(\d+),need=(\d+),flag=(\d+)/);
+    if (m) {
+      _tamaLevel = parseInt(m[1]);
+      setChip('chip-level', m[1], m[1]==='10' ? 'var(--green)' : 'var(--accent)');
+      setChip('chip-wakes', m[2]);
+      setChip('chip-need',  m[4]==='1' ? 'ACTIVE ⚠' : 'none', m[4]==='1' ? 'var(--orange)' : null);
+      setChip('chip-flag',  m[5]==='1' ? '🚩 unlocked' : 'locked', m[5]==='1' ? 'var(--green)' : null);
+    }
+  } catch(e) { log(`TAMA_GET error: ${e.message}`, 'err'); }
+}
+
+async function fsmGet() {
+  if (!cmdChar || !infoChar) return;
+  try {
+    await cmdChar.writeValue(enc('FSM_GET'));
+    await delay(150);
+    const txt = dec(await infoChar.readValue());
+    log(`← ${txt}`, 'recv');
+    const m = txt.match(/fsm:mode=(\d+),stage=(\d+),bg=(\d+)/);
+    if (m) {
+      setChip('chip-mode',  FSM_MODES[parseInt(m[1])]  || m[1]);
+      setChip('chip-stage', FSM_STAGES[parseInt(m[2])] || m[2]);
+      setChip('chip-bg',    m[3]==='1' ? 'ON' : 'off', m[3]==='1' ? 'var(--green)' : null);
+    }
+  } catch(e) { log(`FSM_GET error: ${e.message}`, 'err'); }
+}
+
+function setChip(id, val, color) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = val;
+  el.style.color = color || 'var(--accent)';
+}
+
+function resetChips() {
+  ['chip-mode','chip-stage','chip-bg','chip-level','chip-wakes','chip-need','chip-flag']
+    .forEach(id => setChip(id, '—', 'var(--muted)'));
+}
+
+function nvsReset() {
+  if (!confirm('Erase ALL badge data and reboot?\n\nThis is irreversible.\nThe badge will lose all progress and return to factory state.\nBluetooth server will be disabled after reboot.')) return;
+  sendCmd('NVS_RESET');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Cry synthesis (mirrors identity.cpp / cry.cpp)
+// ═══════════════════════════════════════════════════════════════
+function lcg(s) { return (Math.imul(s, 1664525) + 1013904223) >>> 0; }
+
+const _PFX = ['ka','zo','mi','ra','ta','lu','ne','fi'];
+const _MID = ['na','ri','lo','va','ki','to','me','sa'];
+const _SFX = ['dor','tek','ron','lia','mus','vek','nor','zen'];
+
+function badgeName(b) {
+  const seed = (b[0]<<16)|(b[1]<<8)|b[2];
+  const h = (seed ^ (seed>>>9) ^ (seed>>>18)) >>> 0;
+  const n = _PFX[h&7] + _MID[(h>>3)&7] + _SFX[(h>>6)&7];
+  return n[0].toUpperCase() + n.slice(1);
+}
+
+function mac3FromHex(hex) {
+  hex = hex.replace(/[^0-9a-fA-F]/g,'').toUpperCase();
+  if (hex.length !== 6) return null;
+  return [parseInt(hex.slice(0,2),16), parseInt(hex.slice(2,4),16), parseInt(hex.slice(4,6),16)];
+}
+
+const _SCALES = [
+  ['c5','d5','e5','g5','a5'],['g5','a5','b5','d6','e6'],['a4','c5','d5','e5','g5'],
+  ['d5','e5','g5','a5','b5'],['c5','d5','e5','f5','g5','a5','b5'],['a4','b4','c5','d5','e5','f5','g5'],
+];
+const _RHYTHM = [[1,1,1,1],[0,1,0,1],[2,2,1,0],[1,2,1,2],[0,2,2,1]];
+const _DURS   = [4,8,16];
+
+function buildMusicRtttl(seed) {
+  let s = (seed ^ 0xDEADBEEF) >>> 0;
+  s=lcg(s); const scale = _SCALES[s%_SCALES.length];
+  s=lcg(s); const bpm   = 80 + (s%120);
+  s=lcg(s); const nN    = 8 + (s%7);
+  s=lcg(s); const shape = s%5;
+  s=lcg(s); const rhy   = s%5;
+  s=lcg(s); let cur     = s%scale.length;
+  const notes = [];
+  for (let i=0; i<nN; i++) {
+    s=lcg(s); const r=s%12;
+    let step = (shape===1) ? ((i&1)?1:-1) : (r<4?1:r<8?-1:0);
+    if (r<3&&shape===1) step=0;
+    cur = Math.max(0, Math.min(scale.length-1, cur+step));
+    s=lcg(s); const r2=s%16;
+    if (r2===0&&cur>=2) cur-=2; else if (r2===1&&cur<=scale.length-3) cur+=2;
+    let di = _RHYTHM[rhy][i%4];
+    s=lcg(s); if (s%8===0) { s=lcg(s); di=s%3; }
+    notes.push(`${_DURS[di]}${scale[cur]}`);
+  }
+  notes.push(`4${scale[0]}`);
+  return `MUSIC:d=8,o=5,b=${bpm}:${notes.join(',')}`;
+}
+
+function buildCryParams(seed) {
+  let s = (seed^0xC0FFEE)>>>0;
+  s=lcg(s); const startMidi = 60+(s%30);
+  s=lcg(s); const asc = (s%3)===0;
+  let endMidi;
+  if (asc) { s=lcg(s); endMidi=startMidi+8+(s%20); }
+  else      { s=lcg(s); endMidi=36+(s%24); }
+  s=lcg(s); const durMs=200+(s%800);
+  s=lcg(s); const trem=(s%2)===0;
+  let tHz=0, tD=0;
+  if (trem) { s=lcg(s); tHz=15+(s%60); s=lcg(s); tD=0.04+0.002*(s%80); }
+  const midiToHz = m => 440*Math.pow(2,(m-69)/12);
+  return { startHz:midiToHz(startMidi), endHz:midiToHz(endMidi), durMs, trem, tHz, tD };
+}
+
+function onMacInput() {
+  const hex = document.getElementById('mac-in').value.trim();
+  const b   = mac3FromHex(hex);
+  const res = document.getElementById('mac-result');
+  if (!b) { res.style.display='none'; setMacBtns(true); _macSeed=null; return; }
+  _macSeed     = (b[0]<<16)|(b[1]<<8)|b[2];
+  _macMusicStr = buildMusicRtttl(_macSeed);
+  const p = buildCryParams(_macSeed);
+  const tid = p.trem ? `  tremolo ${p.tHz.toFixed(0)}Hz ${(p.tD*100).toFixed(0)}%` : '';
+  document.getElementById('mac-name').textContent = badgeName(b);
+  document.getElementById('mac-hex').textContent  = hex.toUpperCase();
+  document.getElementById('mac-params').textContent = `${p.startHz.toFixed(0)} Hz → ${p.endHz.toFixed(0)} Hz  ${p.durMs}ms${tid}`;
+  document.getElementById('mac-music').textContent  = '🎵 ' + _macMusicStr;
+  res.style.display = 'block';
+  setMacBtns(false);
+}
+function setMacBtns(d) {
+  ['btn-mac-cry','btn-mac-music'].forEach(id => { const el=document.getElementById(id); if(el) el.disabled=d||!cmdChar; });
+}
+function macSendCry() {
+  if (_macSeed===null) return;
+  sendCmd(`CRY:${_macSeed.toString(16).toUpperCase().padStart(6,'0')}`);
+}
+function macSendMusic() { if (_macMusicStr) sendCmd(`MUSIC:${_macMusicStr}`); }
+
+// ═══════════════════════════════════════════════════════════════
+// Eye calibration
+// ═══════════════════════════════════════════════════════════════
+let _calD = null;
+
+function onCalSlider(key, val) {
+  document.getElementById(`cal-lbl-${key}`).textContent = val;
+  clearTimeout(_calD);
+  _calD = setTimeout(calApply, 200);
+}
+
+function calGet() {
+  const v = {};
+  CAL_FIELDS.forEach(f => { v[f.key] = parseInt(document.getElementById(`cal-${f.key}`).value); });
+  return v;
+}
+
+function calSet(v) {
+  CAL_FIELDS.forEach(f => {
+    if (v[f.key] == null) return;
+    document.getElementById(`cal-${f.key}`).value = v[f.key];
+    document.getElementById(`cal-lbl-${f.key}`).textContent = v[f.key];
+  });
+}
+
+async function calRead() {
+  if (!cmdChar || !infoChar) return;
+  await cmdChar.writeValue(enc('CALGET'));
+  log('→ CALGET', 'send');
+  await delay(200);
+  const txt = dec(await infoChar.readValue());
+  log(`← ${txt}`, 'recv');
+  const m = txt.match(/cal:(-?\d+),(-?\d+),(-?\d+),(-?\d+),(-?\d+),(-?\d+)/);
+  if (m) {
+    const vals = {};
+    CAL_FIELDS.forEach((f,i) => vals[f.key] = parseInt(m[i+1]));
+    calSet(vals);
+    log('Calibration loaded from badge', 'info');
+  }
+}
+
+function calApply() {
+  const v = calGet();
+  sendCmd(`CAL:${v.tlX},${v.tlY},${v.brX},${v.brY},${v.bmX},${v.bmY}`);
+}
+function calSave()  { calApply(); setTimeout(() => sendCmd('CALSAVE'), 100); }
+function calReset() { const v={}; CAL_FIELDS.forEach(f=>v[f.key]=f.def); calSet(v); calApply(); }
+
+// ═══════════════════════════════════════════════════════════════
+// BLE OTA
+// ═══════════════════════════════════════════════════════════════
+const OTA_CHUNK = 244;
+const OTA_BLOCK = 8;
+
+function otaDrop(e) {
+  e.preventDefault();
+  document.getElementById('ota-drop').classList.remove('drag-over');
+  const f = e.dataTransfer.files[0];
+  if (f) otaFileInput(f);
+}
+
+function otaFileInput(file) {
+  if (!file) return;
+  _otaFile = file;
+  const drop = document.getElementById('ota-drop');
+  drop.textContent = `📁 ${file.name}  (${(file.size/1024).toFixed(0)} KB)`;
+  drop.classList.add('has-file');
+  document.getElementById('btn-ota-start').disabled = !cmdChar || !otaDataChar;
+  setOtaStatus('File loaded — ready');
+  log(`OTA: file selected — ${file.name} (${file.size} bytes)`, 'info');
+}
+
+function setOtaStatus(msg, color) {
+  const el = document.getElementById('ota-status');
+  el.textContent = msg; el.style.color = color || 'var(--muted)';
+}
+function setOtaProgress(pct) {
+  document.getElementById('ota-progress-wrap').style.display = 'block';
+  document.getElementById('ota-progress-bar').style.width = `${pct}%`;
+}
+
+async function startOta() {
+  if (!_otaFile || !cmdChar || !otaDataChar || !infoChar || _otaRunning) return;
+  _otaRunning = true;
+  document.getElementById('btn-ota-start').disabled = true;
+  document.getElementById('btn-ota-abort').disabled = false;
+
+  const data  = new Uint8Array(await _otaFile.arrayBuffer());
+  const total = data.length;
+  log(`OTA: starting — ${total} bytes`, 'info');
+
+  try {
+    await cmdChar.writeValue(enc(`OTA_BLE_BEGIN:${total}`));
+    log('→ OTA_BLE_BEGIN', 'send');
+    setOtaProgress(0); setOtaStatus('Transferring…');
+    const t0 = Date.now();
+
+    for (let offset=0; offset<total && _otaRunning; ) {
+      const blockEnd = Math.min(offset + OTA_BLOCK*OTA_CHUNK, total);
+      for (let pos=offset; pos<blockEnd; pos+=OTA_CHUNK) {
+        const sl = data.subarray(pos, pos+OTA_CHUNK);
+        await otaDataChar.writeValueWithoutResponse(sl.buffer.slice(sl.byteOffset, sl.byteOffset+sl.byteLength));
+      }
+      const val = await infoChar.readValue();
+      const m   = dec(val).match(/ota:(\d+)/);
+      const pct = m ? Math.round(parseInt(m[1])*100/total) : 0;
+      const kbps= ((parseInt(m?.[1]||0)/1024)/((Date.now()-t0)/1000)).toFixed(1);
+      setOtaProgress(pct); setOtaStatus(`${pct}% — ${kbps} KB/s`);
+      offset = blockEnd;
+    }
+
+    if (!_otaRunning) {
+      try { await cmdChar.writeValue(enc('OTA_BLE_ABORT')); } catch(_) {}
+      setOtaStatus('Aborted', 'var(--red)');
+    } else {
+      await otaDataChar.writeValueWithoutResponse(new ArrayBuffer(0));
+      setOtaProgress(100); setOtaStatus('Done — badge is rebooting…', 'var(--green)');
+      log('OTA complete — waiting for reboot', 'recv');
+    }
+  } catch(e) {
+    log(`OTA error: ${e.message}`, 'err');
+    setOtaStatus(`Error: ${e.message}`, 'var(--red)');
+    try { await cmdChar.writeValue(enc('OTA_BLE_ABORT')); } catch(_) {}
+  }
+  _otaRunning = false;
+  document.getElementById('btn-ota-start').disabled = false;
+  document.getElementById('btn-ota-abort').disabled = true;
+}
+
+function abortOta() { _otaRunning = false; }
+
+// ═══════════════════════════════════════════════════════════════
+// Log
+// ═══════════════════════════════════════════════════════════════
+function log(msg, cls='info') {
+  const el  = document.getElementById('log-box');
+  const ts  = new Date().toLocaleTimeString('en',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  const line = document.createElement('div');
+  line.className = `log-${cls}`;
+  line.textContent = `[${ts}] ${msg}`;
+  el.appendChild(line);
+  el.scrollTop = el.scrollHeight;
+}
+function clearLog() { document.getElementById('log-box').innerHTML = ''; }
+
+// ═══════════════════════════════════════════════════════════════
+// Utils
+// ═══════════════════════════════════════════════════════════════
+const enc = s => new TextEncoder().encode(s);
+const dec = v => new TextDecoder().decode(v);
+const delay = ms => new Promise(r => setTimeout(r, ms));
+</script>
+</body>
+</html>
